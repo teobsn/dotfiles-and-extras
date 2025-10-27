@@ -1,0 +1,126 @@
+/* macOS launchpad */
+
+.show-apps .show-apps-icon {
+    color: transparent;
+    background-image: url("launchpad.png");
+    background-size: contain;
+}
+
+/* screenshot / settings / lock / power options; part of quick-toggle-arrow [44+] */
+.icon-button {
+	transition-duration: 100ms;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.quick-toggle, /* 43 */
+.quick-menu-toggle .quick-toggle { /* 44+ */
+	transition-duration: 100ms;
+}
+
+/* toggle name */
+.quick-toggle .quick-toggle-label {
+	font-weight: 600;
+}
+
+#dash .dash-background {
+	background-color: rgba(50, 50, 50, 0.7);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+	border: none; /* remove black border on ubuntu */
+	padding: 4px 2px 4px 2px;
+	border-radius: 24px;
+}
+
+/* app icons effects in dash */
+#dash .app-well-app:hover .overview-icon,
+#dash .app-well-app:focus .overview-icon,
+#dash .app-well-app:selected .overview-icon,
+#dash .show-apps:hover .overview-icon,
+#dash .show-apps:focus .overview-icon,
+#dash .dash-item-container .overview-tile:hover .overview-icon, /* 46+ */
+#dash .dash-item-container .overview-tile:focus .overview-icon, /* 46+ */
+#dash .dash-item-container .overview-tile:selected .overview-icon, /* 46+ */
+#dash .dash-item-container .show-apps:checked .overview-icon {
+	box-shadow: inset 0 0 4px 1px rgba(210, 210, 210, 0.4);
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Sliders */
+
+.slider,
+.level {
+	-barlevel-height: 8px;
+	-barlevel-border-width: 0px;
+	/* overfill */
+	-barlevel-overdrive-separator-width: 2px;
+	-slider-handle-radius: 8px;
+}
+
+
+/* Popovers */
+
+.popup-menu-content, /* popover content */
+.candidate-popup-content { /* datemenu, quick settings... */
+	padding: 8px;
+	border-radius: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.07);
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);	
+}
+
+.popup-menu-item, /* menu items */
+.app-menu { /* right-click (and panel) app menu */
+	margin: 3px 0;
+	border-radius: 12px;
+	padding: 8px 10px;
+	transition-duration: 150ms;
+}
+
+.popup-menu-item:first-child { margin: 0 0 3px 0; }
+.popup-menu-item:last-child { margin: 3px 0 0 0; }
+.popup-menu-item:first-child:last-child { margin: 0; }
+
+.popup-menu-item:focus,
+.popup-menu-item:hover,
+.popup-menu-item:checked {
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03) !important;
+}
+
+.popup-menu-item:checked {
+	border-radius: 12px 12px 0 0;
+}
+/* 44 separator margin fix */
+.popup-separator-menu-item {
+	padding: 5px !important;
+}
+
+/* separator in popup menu */
+.popup-separator-menu-item .popup-separator-menu-item-separator {
+	height: 1px;
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+/* popover submenus */
+.popup-sub-menu {
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+	border-radius: 0 0 12px 12px;
+}
+
+/* submenu items */
+.popup-sub-menu .popup-menu-item {
+	margin: 0;
+	background-color: transparent;
+	border-radius: 0;
+}
+
+/* make rounded borders for last element */
+.popup-sub-menu .popup-menu-item:last-child {
+	border-radius: 0 0 12px 12px;
+}
+.popup-menu-item:insensitive {
+	margin: 0;
+}
+
+/* all other graphical elements (sliders), OpenWeather Extension */
+.popup-inactive-menu-item {
+	background-color: transparent;
+}

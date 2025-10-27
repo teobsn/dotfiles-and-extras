@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# Description | Copy the latest monitor configuration to GDM.
+# Author      | Lorenzo Murarotto
+# Email       | lnzmrr@gmail.com
+
+shopt -s nullglob # Unmatched globs expand to null.
+
+GDM_CONFIG_DIR=/var/lib/gdm/.config
+GDM_CONFIG_FILE=$GDM_CONFIG_DIR/monitors.xml
+
+GDM_DCONF_FILE=$GDM_CONFIG_DIR/dconf/user
+
+if [ ! -d $GDM_CONFIG_DIR ]; then
+    echo "GDM configuration directory not present, exiting."
+    exit 1
+fi
+
+for config in /home/*/.config/monitors.xml; do
+    if [ ! -f "$GDM_CONFIG_FILE" ] || [[ $(date +%s -r "$config") > $(date +%s -r "$GDM_CONFIG_FILE") ]]; then
+        echo "Copying newest file version from '$config' to '$GDM_CONFIG_FILE'."
+        cp "$config" "$GDM_CONFIG_FILE"
+        chown gdm:gdm "$GDM_CONFIG_FILE"
+    fi
+done
+
+for config in /home/*/.config/dconf/user; do
+    if [ ! -f "$GDM_DCONF_FILE" ] || [[ $(date +%s -r "$config") > $(date +%s -r "$GDM_DCONF_FILE") ]]; then
+        echo "Copying newest file version from '$config' to '$GDM_DCONF_FILE'."
+        cp "$config" "$GDM_DCONF_FILE"
+        chown gdm:gdm "$GDM_DCONF_FILE"
+    fi
+done

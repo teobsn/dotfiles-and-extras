@@ -1,0 +1,28 @@
+# QT on Gnome
+#QT_STYLE_OVERRIDE='qt6ct'
+QT_QPA_PLATFORMTHEME='qt6ct'
+
+# Firefox
+MOZ_DISABLE_RDD_SANDBOX=1
+
+# ROCm RDNA2
+HSA_OVERRIDE_GFX_VERSION=10.3.0
+
+# Electron
+#ELECTRON_OZONE_PLATFORM_HINT=auto
+
+# SDL
+#SDL_VIDEODRIVER=wayland
+
+# Universal font stem darkening
+FREETYPE_PROPERTIES="cff:no-stem-darkening=0 autofitter:no-stem-darkening=0"
+
+# VDPAU AMD
+VDPAU_DRIVER=radeonsi
+
+# OPENCV Log level
+OPENCV_LOG_LEVEL=ERROR
+
+# PROTON
+#PROTON_USE_NTSYNC=1
+#PROTON_USE_WOW64=1
