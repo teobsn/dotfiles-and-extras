@@ -1,0 +1,9 @@
+#
+#
+# Rest of the settings above this line
+
+GRUB_TIMEOUT=0
+#GRUB_TIMEOUT_STYLE=hidden
+GRUB_HIDDEN_TIMEOUT=1
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+
