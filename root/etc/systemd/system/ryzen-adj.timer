@@ -1,0 +1,11 @@
+[Unit]
+Description=RyzenAdj undervolt service timer (60s)
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+Persistent=true
+Unit=ryzen-adj.service
+
+[Install]
+WantedBy=timers.target
