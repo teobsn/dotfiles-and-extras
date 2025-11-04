@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+### Settings modifiable only directly via dconf
+# Do not download updates automatically
+gsettings set org.gnome.software download-updates false
+
+# Enable VRR, native Xwayland scaling, framebuffer scaling (fractional scaling), automatically close Xwayland when unused
+gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer', 'autoclose-xwayland', 'variable-refresh-rate', 'xwayland-native-scaling']"
+gsettings set org.gnome.shell disable-extension-version-validation true
+
+# Disable MMB paste
+gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
+
+# Allow resize with RMB (useful for combining with Super key)
+gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
+
+# Enable minimize, maximize button
+gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+
+# Center new windows
+gsettings set org.gnome.mutter center-new-windows true
+
+
+### Gnome settings center
+gsettings set org.gnome.desktop.interface enable-hot-corners false
+
+
+### Keybinds
+# Move message tray keybind to Super+Alt+V so that the Clipboard Indicator extension can use Super+V
+gsettings set org.gnome.shell.keybindings toggle-message-tray ['<Alt><Super>v']
+# Set screenshot key to Super+Shift+S
+gsettings set org.gnome.shell.keybindings show-screenshot-ui ['<Shift><Super>s']
+
+# Make Alt+Tab show window preview/thumbnail on switcher instead of the app icon
+gsettings set org.gnome.desktop.wm.keybindings switch-applications ['<Super>Tab']
+gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward ['<Shift><Super>Tab']
+gsettings set org.gnome.desktop.wm.keybindings switch-windows ['<Alt>Tab']
+gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward ['<Shift><Alt>Tab']
+
+# Make fullscreen togglable by using Alt+Return
+gsettings set org.gnome.desktop.wm.keybindings toggle-fullscreen ['<Alt>Return']
