@@ -1,9 +1,12 @@
-#
-#
-# Rest of the settings above this line
-
 GRUB_TIMEOUT=0
 #GRUB_TIMEOUT_STYLE=hidden
 GRUB_HIDDEN_TIMEOUT=1
 GRUB_HIDDEN_TIMEOUT_QUIET=true
-
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="resume=UUID=6e62c394-02c7-411f-932a-052b10cd9093 quiet loglevel=3 udev.log-priority=3 systemd.show_status=auto vt.global_cursor_default=0 mitigations=off workqueue.power_efficient=true pcie_aspm=force amdgpu.seamless=1 iommu=pt pcie_acs_override=downstream,multifunction acpi_enforce_resources=lax split_lock_detect=off psi=1 msr.allow_writes=on nowatchdog audit=0 cryptomgr.notests noreplace-smp page_alloc.shuffle=1 rcupdate.rcu_expedited=1 net.ifnames=0 "
+#export GRUB_CMDLINE_LINUX_2="resume=UUID=6e62c394-02c7-411f-932a-052b10cd9093 rhgb quiet loglevel=3 udev.log-priority=3 systemd.show_status=auto vt.global_cursor_default=0 mitigations=off workqueue.power_efficient=true nohz_full=1 amdgpu.seamless=1 iommu=pt pcie_acs_override=downstream,multifunction acpi_enforce_resources=lax split_lock_detect=off psi=1 msr.allow_writes=on nowatchdog audit=0 cryptomgr.notests no_timer_check noreplace-smp page_alloc.shuffle=1 rcupdate.rcu_expedited=1 tsc=reliable net.ifnames=0 vfio-pci.ids=1002:1681"
+GRUB_DISABLE_RECOVERY="true"
+GRUB_ENABLE_BLSCFG=true

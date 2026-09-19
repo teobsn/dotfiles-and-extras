@@ -1,33 +1,66 @@
 #!/usr/bin/env bash
 #
-# Description | Copy the latest monitor configuration to GDM.
-# Author      | Lorenzo Murarotto
-# Email       | lnzmrr@gmail.com
+# Copy the latest monitor configuration to GDM.
+#
 
 shopt -s nullglob # Unmatched globs expand to null.
 
-GDM_CONFIG_DIR=/var/lib/gdm/.config
-GDM_CONFIG_FILE=$GDM_CONFIG_DIR/monitors.xml
+# Search for GDM seat config directories
+# Typically /var/lib/gdm/seat0/config but can vary
+GDM_BASE_DIR="/var/lib/gdm"
+CONFIG_DIRS=("$GDM_BASE_DIR"/seat*/config)
 
-GDM_DCONF_FILE=$GDM_CONFIG_DIR/dconf/user
+if [ ${#CONFIG_DIRS[@]} -eq 0 ]; then
+    # Fallback to the old path if no seat directories are found
+    if [ -d "$GDM_BASE_DIR/.config" ]; then
+        CONFIG_DIRS=("$GDM_BASE_DIR/.config")
+    else
+        echo "Error: Could not find GDM configuration directory in $GDM_BASE_DIR"
+        exit 1
+    fi
+fi
 
-if [ ! -d $GDM_CONFIG_DIR ]; then
-    echo "GDM configuration directory not present, exiting."
+# Identify the source config file
+if [ -n "$SUDO_USER" ]; then
+    USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+    SOURCE_CONFIG="$USER_HOME/.config/monitors.xml"
+else
+    SOURCE_CONFIG="$HOME/.config/monitors.xml"
+fi
+
+# Fallback: search for any monitors.xml in /home if the above doesn't exist
+if [ ! -f "$SOURCE_CONFIG" ]; then
+    for config in /home/*/.config/monitors.xml; do
+        SOURCE_CONFIG="$config"
+        break
+    done
+fi
+
+if [ ! -f "$SOURCE_CONFIG" ]; then
+    echo "Error: No monitors.xml found in ~/.config or /home/*/.config/"
     exit 1
 fi
 
-for config in /home/*/.config/monitors.xml; do
-    if [ ! -f "$GDM_CONFIG_FILE" ] || [[ $(date +%s -r "$config") > $(date +%s -r "$GDM_CONFIG_FILE") ]]; then
-        echo "Copying newest file version from '$config' to '$GDM_CONFIG_FILE'."
-        cp "$config" "$GDM_CONFIG_FILE"
-        chown gdm:gdm "$GDM_CONFIG_FILE"
-    fi
-done
+for GDM_CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
+    GDM_CONFIG_FILE="$GDM_CONFIG_DIR/monitors.xml"
+    echo "Processing directory: $GDM_CONFIG_DIR"
 
-for config in /home/*/.config/dconf/user; do
-    if [ ! -f "$GDM_DCONF_FILE" ] || [[ $(date +%s -r "$config") > $(date +%s -r "$GDM_DCONF_FILE") ]]; then
-        echo "Copying newest file version from '$config' to '$GDM_DCONF_FILE'."
-        cp "$config" "$GDM_DCONF_FILE"
-        chown gdm:gdm "$GDM_DCONF_FILE"
+    # Dynamically detect GDM user/group from the directory
+    GDM_AUTH=$(stat -c "%u:%g" "$GDM_CONFIG_DIR")
+    echo "  Detected GDM authentication as $GDM_AUTH"
+
+    echo "  Copying '$SOURCE_CONFIG' to '$GDM_CONFIG_FILE'..."
+    cp "$SOURCE_CONFIG" "$GDM_CONFIG_FILE"
+
+    echo "  Setting ownership to $GDM_AUTH..."
+    chown "$GDM_AUTH" "$GDM_CONFIG_FILE"
+
+    echo "  Setting permissions to 644..."
+    chmod 644 "$GDM_CONFIG_FILE"
+
+    # SELinux support
+    if command -v restorecon >/dev/null 2>&1; then
+        echo "  Restoring SELinux context..."
+        restorecon -v "$GDM_CONFIG_FILE"
     fi
 done

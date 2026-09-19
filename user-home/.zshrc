@@ -105,11 +105,17 @@ source <(fzf --zsh)
 
 ##### Personal aliases
 alias ll="ls -lh --group-directories-first --color=auto --classify --time-style=long-iso --hyperlink=always"
-# alias ll="exa -l --color=always --group-directories-first"
-alias qobuz-dl="rip serach --source qobuz --max-quality 4"
-alias update-grub="sudo grub2-mkconfig -o /boot/grub2/grub.cfg"
+alias update-grub="grub2-mkconfig -o /boot/grub2/grub.cfg"
+alias agyr="agy --continue"
+alias files="nautilus . &> /dev/null"
 
+# Common tools
+alias yt-dlp-mp3="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0"
 
 #####
 
 export PATH="$PATH:/home/teodor/.spicetify:/home/teodor/.local/bin:/usr/local/sbin:/sbin:/usr/sbin:/home/teodor/.cargo/bin"
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"

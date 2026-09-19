@@ -1,7 +1,0 @@
-#!/bin/bash
-#
-for I in `echo $*`
-do
-  gnome-terminal -- bash -c "/home/teobsn/.local/bin/pho install local $I;sleep 1"
-done
-exit

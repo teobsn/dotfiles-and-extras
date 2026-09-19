@@ -3,5 +3,4 @@ Description=RyzenAdj undervolt service
 
 [Service]
 Type=oneshot
-# Undervolt by 15mV
-ExecStart=/usr/local/bin/ryzenadj --set-coall=0xFFFF1 --set-cogfx=0xFFFF1
+ExecStart=/usr/local/bin/ryzenadj --set-coall=0xFFFFB --set-cogfx=0xFFFFB

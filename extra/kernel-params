@@ -1,8 +1,2 @@
-quiet loglevel=3 udev.log-priority=3 systemd.show_status=auto vt.global_cursor_default=0 mitigations=off workqueue.power_efficient=true pcie_aspm=force amdgpu.seamless=1 iommu=pt acpi_enforce_resources=lax split_lock_detect=off psi=1 msr.allow_writes=on nowatchdog audit=0 cryptomgr.notests noreplace-smp page_alloc.shuffle=1 rcupdate.rcu_expedited=1 net.ifnames=0
-
-
-# These should usually be put into /etc/default/grub
-# inside the GRUB_CMDLINE_LINUX parameter
-
-# I currently use an initrd-less boot scheme, so I add:
-noinitrd initrd=''
+# Boot with default options (no initrd)
+root=/dev/nvme0n1p8 noinitrd initrd='' ro resume=UUID=6e62c394-02c7-411f-932a-052b10cd9093 quiet splash loglevel=3 udev.log-priority=3 systemd.show_status=auto vt.global_cursor_default=0 mitigations=off workqueue.power_efficient=true pcie_aspm=force amdgpu.seamless=1 iommu=pt acpi_enforce_resources=lax split_lock_detect=off psi=1 msr.allow_writes=on nowatchdog audit=0 cryptomgr.notests noreplace-smp page_alloc.shuffle=1 rcupdate.rcu_expedited=1 zswap.enabled=1 zswap.compressor=lz4 zswap.max_pool_percent=40 net.ifnames=0 module.async_probe=1 driver_async_probe=amdgpu,snd_hda_intel,snd_usb_audio,iwlwifi,r8152 drm.edid_firmware=eDP-0:edid/tl140.bin,eDP-1:edid/tl140.bin
